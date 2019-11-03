@@ -1,6 +1,4 @@
-package com.kons.dao;
-
-import org.apache.ibatis.annotations.Select;
+package com.kons.bean;
 
 public class User {
     private int id;

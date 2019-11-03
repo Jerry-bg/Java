@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="hh">
-    <select id="findUserById" parameterType="int" resultType="com.kons.dao.User">
+<mapper namespace="kons">
+    <select id="findUserById" parameterType="int" resultType="user">
         select * from ibatis_user where id=#{id}
     </select>
 </mapper>
