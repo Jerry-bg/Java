@@ -1,6 +1,9 @@
 package com.kons;
 
+import com.kons.bean.Department;
+import com.kons.bean.Employe;
 import com.kons.bean.User;
+import com.kons.dao.IDepartmentDao;
 import com.kons.dao.IUserDao;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -25,16 +28,22 @@ public class App
 
         BasicConfigurator.configure();
 
-        List<Integer> list=new ArrayList<>();
-        list.add(1);
-        list.add(3);
+//        List<Integer> list=new ArrayList<>();
+//        list.add(1);
+//        list.add(3);
 
         try (SqlSession sqlSession=App.getSqlSession()){
-            IUserDao userDao=sqlSession.getMapper(IUserDao.class);
-            List<User> users=userDao.findUserById(list);
+//            IUserDao userDao=sqlSession.getMapper(IUserDao.class);
+//            List<User> users=userDao.findUserById(list);
 
-            for (User u:users){
-                System.out.println(u.getPerson_name());
+            IDepartmentDao departmentDao=sqlSession.getMapper(IDepartmentDao.class);
+            Department department=departmentDao.findEmployeesByDepart("DP003");
+            Employe employee=departmentDao.findEmployInfo("E000001");
+
+            System.out.println(employee.toString());
+
+            for (Employe employe:department.getEmployes()){
+                System.out.println(employe.toString());
             }
         }
     }

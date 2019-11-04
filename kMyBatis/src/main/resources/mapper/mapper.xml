@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kons.dao.IDepartmentDao">
+
+    <resultMap id="departMap" type="department">
+        <id column="id" property="id"/>
+        <result column="department_code" property="department_code"/>
+        <result column="department_name" property="department_name"/>
+        <result column="department_addr" property="department_addr"/>
+
+        <collection property="employes" ofType="employe">
+            <id column="e_id" property="id"/>
+            <result property="employe_code" column="employe_code"/>
+            <result property="employe_name" column="employe_name"/>
+            <result property="employe_phone" column="employe_phone"/>
+            <result property="department_code" column="department_code"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="employeMap" type="employe">
+        <id column="id" property="id"/>
+        <result property="employe_code" column="employe_code"/>
+        <result property="employe_name" column="employe_name"/>
+        <result property="employe_phone" column="employe_phone"/>
+        <result property="department_code" column="department_code"/>
+
+        <association property="department" javaType="department">
+            <id property="id" column="d_id"/>
+            <result column="department_code" property="department_code"/>
+            <result column="department_name" property="department_name"/>
+            <result column="department_addr" property="department_addr"/>
+        </association>
+    </resultMap>
+
+    <select id="findEmployeesByDepart"  resultMap="departMap">
+        SELECT
+            d.id,d.department_code,d.department_name,d.department_addr,
+            p.id as e_id,p.employe_code,p.employe_name,p.employe_phone,p.department_code
+        FROM base_department d
+        LEFT JOIN sys_employees p ON d.department_code=p.department_code
+        WHERE d.department_code=#{department_code}
+    </select>
+
+    <select id="findEmployInfo" resultMap="employeMap">
+        SELECT
+            d.id as d_id,d.department_code,d.department_name,d.department_addr,
+            p.id,p.employe_code,p.employe_name,p.employe_phone,p.department_code
+        FROM sys_employees p
+        LEFT JOIN base_department d ON p.department_code=d.department_code
+        WHERE p.employe_code=#{employe_code}
+    </select>
+
+</mapper>
