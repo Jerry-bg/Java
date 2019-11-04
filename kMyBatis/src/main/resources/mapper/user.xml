@@ -2,8 +2,15 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kons">
+<mapper namespace="com.kons.dao.IUserDao">
     <select id="findUserById" parameterType="int" resultType="user">
-        select * from ibatis_user where id=#{id}
+        select id,person_name,person_age
+        from ibatis_user
+        <if test="list != null and list.size>0">
+            where id in 
+            <foreach collection="list" open="(" close=")" item="id" separator=",">
+                #{id}
+            </foreach>
+        </if>
     </select>
 </mapper>
