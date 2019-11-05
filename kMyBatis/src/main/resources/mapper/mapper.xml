@@ -27,7 +27,7 @@
         <result property="department_code" column="department_code"/>
 
         <association property="department" javaType="department">
-            <id property="id" column="d_id"/>
+            <id property="id" column="id"/>
             <result column="department_code" property="department_code"/>
             <result column="department_name" property="department_name"/>
             <result column="department_addr" property="department_addr"/>
@@ -45,7 +45,7 @@
 
     <select id="findEmployInfo" resultMap="employeMap">
         SELECT
-            d.id as d_id,d.department_code,d.department_name,d.department_addr,
+            d.id,d.department_code,d.department_name,d.department_addr,
             p.id,p.employe_code,p.employe_name,p.employe_phone,p.department_code
         FROM sys_employees p
         LEFT JOIN base_department d ON p.department_code=d.department_code
