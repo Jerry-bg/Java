@@ -1,9 +1,8 @@
 package com.kons;
 
-import com.kons.bean.Department;
-import com.kons.bean.Employe;
-import com.kons.bean.User;
+import com.kons.bean.*;
 import com.kons.dao.IDepartmentDao;
+import com.kons.dao.IEmployeDao;
 import com.kons.dao.IUserDao;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -37,6 +36,8 @@ public class App
 //            List<User> users=userDao.findUserById(list);
 
             IDepartmentDao departmentDao=sqlSession.getMapper(IDepartmentDao.class);
+            IEmployeDao employeDao=sqlSession.getMapper(IEmployeDao.class);
+            OEmployeInfo person = (OEmployeInfo) employeDao.findPersonByCode("P000003");
             Department department=departmentDao.findEmployeesByDepart("DP003");
             Employe employee=departmentDao.findEmployInfo("E000001");
 
