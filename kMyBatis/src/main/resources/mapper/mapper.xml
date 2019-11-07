@@ -4,6 +4,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kons.dao.IDepartmentDao">
 
+    <!--使用FIFO（队列先进先出）的方式使用二级缓存-->
+    <cache eviction="FIFO" flushInterval="6000" readOnly="true" size="1024"/>
+
     <resultMap id="departMap" type="department">
         <id column="id" property="id"/>
         <result column="department_code" property="department_code"/>
@@ -34,7 +37,8 @@
         </association>
     </resultMap>
 
-    <select id="findEmployeesByDepart"  resultMap="departMap">
+    <!--该语句不使用缓存-->
+    <select id="findEmployeesByDepart" useCache="false" resultMap="departMap">
         SELECT
             d.id,d.department_code,d.department_name,d.department_addr,
             p.id as e_id,p.employe_code,p.employe_name,p.employe_phone,p.department_code
