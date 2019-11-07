@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kons.dao.IEmployeDao">
+    <!--mybatis鉴别器使用-->
+    
+    <resultMap id="employeMap" type="person">
+        <id column="p_id" property="p_id"/>
+        <result column="p_name" property="p_name"/>
+        <result column="p_code" property="p_code"/>
+        <result column="p_type" property="p_type"/>
+        <result column="p_sex" property="p_sex"/>
+        <discriminator javaType="int" column="p_type">
+            <case value="1" resultMap="outerEmployeMap"/>
+            <case value="0" resultMap="innerEmployeMap"/>
+        </discriminator>
+    </resultMap>
+    
+    <select id="findPersonByCode" parameterType="string" resultMap="employeMap">
+        SELECT * FROM sys_person WHERE p_code=#{p_code}
+    </select>
+    <select id="findOuterEmployees" parameterType="string" resultType="OuterEmploye">
+        SELECT * FROM sys_outer_employees WHERE op_code=#{op_code}
+    </select>
+    <select id="findInnerEmployees" parameterType="string" resultType="InnerEmploye">
+        SELECT * FROM sys_inner_employees WHERE ie_code=#{ie_code}
+    </select>
+
+    <resultMap id="outerEmployeMap" type="OEmployeInfo" extends="employeMap">
+        <association property="employeInfo" select="findOuterEmployees" column="p_code"/>
+    </resultMap>
+    <resultMap id="innerEmployeMap" type="IEmployeInfo" extends="employeMap">
+        <association property="employeInfo" select="findInnerEmployees" column="p_code"/>
+    </resultMap>
+</mapper>

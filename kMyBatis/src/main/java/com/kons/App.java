@@ -27,17 +27,15 @@ public class App
 
         BasicConfigurator.configure();
 
-//        List<Integer> list=new ArrayList<>();
-//        list.add(1);
-//        list.add(3);
-
         try (SqlSession sqlSession=App.getSqlSession()){
-//            IUserDao userDao=sqlSession.getMapper(IUserDao.class);
-//            List<User> users=userDao.findUserById(list);
 
             IDepartmentDao departmentDao=sqlSession.getMapper(IDepartmentDao.class);
             IEmployeDao employeDao=sqlSession.getMapper(IEmployeDao.class);
+
+            //查询员工以及归属（鉴别器的使用）
             OEmployeInfo person = (OEmployeInfo) employeDao.findPersonByCode("P000003");
+
+            //mybatis一对多查询测试
             Department department=departmentDao.findEmployeesByDepart("DP003");
             Employe employee=departmentDao.findEmployInfo("E000001");
 
