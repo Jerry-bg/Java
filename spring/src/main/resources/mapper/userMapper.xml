@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kons.dao.IUserDao">
+
+    <select id="findUserById" parameterType="int" resultType="user">
+        SELECT id,person_name,person_account,person_age
+        FROM ibatis_user WHERE id=#{id}
+    </select>
+
+    <insert id="addUser" parameterType="User">
+        INSERT INTO ibatis_user(id,person_name,person_age,person_account,person_pwd,person_addr)
+        VALUE (#{id},#{person_name},#{person_age},#{person_account},#{person_pwd},#{person_addr})
+    </insert>
+</mapper>
