@@ -23,7 +23,8 @@ public class TestController {
     @RequestMapping(value = "/register",method = RequestMethod.POST)
     @ResponseBody
     public String register(@RequestBody User user){
-        testService.register(user);
+
+        //testService.register(user);
         return JSON.toJSONString(user);
     }
 }
