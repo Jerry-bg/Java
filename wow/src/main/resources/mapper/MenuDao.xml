@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wow.kons.dao.MenuDao">
+
+
+    <cache eviction="FIFO"
+           flushInterval="60000"
+           size="512"
+           readOnly="true"/>
+
+<!--    <resultMap id="menu2Map" type="menu">-->
+<!--        <id property="m_code" column="m_code"/>-->
+<!--        <result property="m_name" column="m_name"/>-->
+<!--        <result property="m_type" column="m_type"/>-->
+<!--        <result property="m_parent_code" column="m_parent_code"/>-->
+<!--        <result property="m_path" column="m_path"/>-->
+<!--    </resultMap>-->
+
+    <resultMap id="menusMap" type="menu">
+        <id property="m_code" column="m_code"/>
+        <result property="m_name" column="m_name"/>
+        <result property="m_type" column="m_type"/>
+        <result property="m_parent_code" column="m_parent_code"/>
+        <result property="m_path" column="m_path"/>
+        <collection property="menus" ofType="menu" select="obtainMenus2" column="m_code"/>
+    </resultMap>
+
+    <select id="obtainMenus" resultMap="menusMap">
+        SELECT m_code,m_name,m_type,m_parent_code,m_path
+        FROM sys_menu
+        WHERE m_type=1
+    </select>
+
+    <select id="obtainMenus2" resultMap="menusMap">
+        SELECT m_code,m_name,m_type,m_parent_code,m_path
+        FROM sys_menu
+        WHERE m_parent_code=#{m_code}
+    </select>
+</mapper>
