@@ -10,14 +10,6 @@
            size="512"
            readOnly="true"/>
 
-<!--    <resultMap id="menu2Map" type="menu">-->
-<!--        <id property="m_code" column="m_code"/>-->
-<!--        <result property="m_name" column="m_name"/>-->
-<!--        <result property="m_type" column="m_type"/>-->
-<!--        <result property="m_parent_code" column="m_parent_code"/>-->
-<!--        <result property="m_path" column="m_path"/>-->
-<!--    </resultMap>-->
-
     <resultMap id="menusMap" type="menu">
         <id property="m_code" column="m_code"/>
         <result property="m_name" column="m_name"/>
